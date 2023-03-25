@@ -1,17 +1,18 @@
-import Layout from '@/layouts';
-import SignIn from '@/pages/SigninPage';
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from '@/components/layouts';
+import Dashboard from '@/components/pages/Dashboard';
+import ProjectPage from '@/components/pages/ProjectPage';
+import SignIn from '@/components/pages/SignPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const AppRouter = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Layout />}>
-					<Route index element={<div>Dashboard</div>} />
+				<Route path='/' element={<Layout />}>
+					<Route index element={<Dashboard />} />
+					<Route path='projects/:id' element={<ProjectPage />} />
 				</Route>
-				<Route path="/signin/success" element />
-				<Route path="/signin" element={<SignIn />} />
+				<Route path='/signin' element={<SignIn />} />
 			</Routes>
 		</BrowserRouter>
 	);
