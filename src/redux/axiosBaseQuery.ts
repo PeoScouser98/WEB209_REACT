@@ -1,25 +1,22 @@
-import { createApi } from '@reduxjs/toolkit/query';
+import '@/configs/axios.config';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
-import instance from '@/configs/axios.config';
-import type { AxiosRequestConfig, AxiosError } from 'axios';
+import type { AxiosError, AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-const axiosBaseQuery =
-	(
-		{ baseUrl }: { baseUrl: string } = { baseUrl: '' }
-	): BaseQueryFn<
-		{
-			url: string;
-			method: AxiosRequestConfig['method'];
-			data?: AxiosRequestConfig['data'];
-			params?: AxiosRequestConfig['params'];
-		},
-		unknown,
-		unknown
-	> =>
-	async ({ url, method, data, params }) => {
+export default function axiosBaseQuery(): BaseQueryFn<
+	{
+		url: string;
+		method: AxiosRequestConfig['method'];
+		data?: AxiosRequestConfig['data'];
+		params?: AxiosRequestConfig['params'];
+	},
+	unknown,
+	unknown
+> {
+	return async ({ url, method, data, params }) => {
 		try {
-			const result = await instance({ url: baseUrl + url, method, data, params });
-			return { data: result.data };
+			const response = await axios.request({ url, method, data, params });
+			return { data: response };
 		} catch (axiosError) {
 			let err = axiosError as AxiosError;
 			return {
@@ -30,5 +27,4 @@ const axiosBaseQuery =
 			};
 		}
 	};
-
-export default axiosBaseQuery;
+}

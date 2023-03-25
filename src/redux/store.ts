@@ -3,10 +3,10 @@ import { persistReducer, persistStore, REHYDRATE, REGISTER, FLUSH, PERSIST, PURG
 import storage from 'redux-persist/lib/storage';
 import authApi from './apis/authApi';
 import rootReducer from './rootReducer';
+
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: [],
 };
 
 const persitedReducer = persistReducer(persistConfig, rootReducer);
@@ -15,7 +15,7 @@ const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
-				ignoredActions: [REHYDRATE, REGISTER, FLUSH, PERSIST, PURGE, PAUSE],
+				ignoredActions: [REGISTER, FLUSH, PERSIST, PURGE, PAUSE],
 			},
 		}).concat([authApi.middleware]),
 });
