@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.menu :where(li:not(.menu-title):not(:empty)) > :where(:not(ul).active),
+	.menu :where(li:not(.menu-title):not(:empty)) > :where(*:not(ul):active) {
+		@apply bg-neutral-content/20;
+	}
+	.collapse-title,
+	:where(.collapse > input[type='checkbox']) {
+		@apply min-h-fit w-full p-1 transition-[background-color_0.2s_ease-in-out];
+	}
+
+	.table :where(thead, tfoot) :where(th, td) {
+		@apply bg-neutral text-neutral-content;
+	}
+}
