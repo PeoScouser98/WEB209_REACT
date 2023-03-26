@@ -15,4 +15,23 @@
 	.table :where(thead, tfoot) :where(th, td) {
 		@apply bg-neutral text-neutral-content;
 	}
+
+	/*#region scrollbar */
+	.invisible-scroll::-webkit-scrollbar {
+		@apply hidden;
+	}
+	.scroll {
+		@apply: w-[4px];
+	}
+
+	.scroll::-webkit-scrollbar {
+		@apply mr-1 h-1 w-1 opacity-0;
+	}
+	.scroll::-webkit-scrollbar-track {
+		@apply w-4;
+	}
+	.scroll::-webkit-scrollbar-thumb {
+		@apply bg-neutral/50;
+	}
+	/*#endregion */
 }

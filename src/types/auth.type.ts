@@ -1,6 +1,6 @@
-import { IUser } from './user.type';
+import { User } from './user.type';
 
 export type Auth = {
-	user: Partial<IUser> | null;
+	user: Partial<User> | null;
 	authenticated: boolean;
 };

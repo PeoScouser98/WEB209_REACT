@@ -1,22 +1,18 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { BiHome, BiFolder, BiMoon, BiPlus, BiDoorOpen } from 'react-icons/bi';
-import { BsPerson, BsThreeDots } from 'react-icons/bs';
-import React from 'react';
-import { Menu, MenuItem } from '../@tailwind/Menu';
-import Collapse from '../@tailwind/Collapse';
 import { useAppSelector } from '@/redux/reduxHook';
+import { BiDoorOpen, BiFolder, BiPlus } from 'react-icons/bi';
+import { BsFolder, BsGrid1X2, BsGrid1X2Fill, BsPerson } from 'react-icons/bs';
+import { Link, useLocation } from 'react-router-dom';
 import Avatar from '../@tailwind/Avatar';
-import Button from '../@tailwind/Button';
+import Collapse from '../@tailwind/Collapse';
+import { Menu, MenuItem } from '../@tailwind/Menu';
 import Tooltip from '../@tailwind/Tooltip';
-import { Dropdown, DropdownContent } from '../@tailwind/Dropdown';
-import Typography from '../@tailwind/Typography';
 
 const Sidebar = () => {
 	const { user } = useAppSelector((state) => state.auth);
 	const location = useLocation();
 
 	return (
-		<div className='drawer-side min-w-[320px] bg-base-200'>
+		<div className='drawer-side min-w-[320px] bg-neutral-focus text-neutral-content'>
 			<label htmlFor='my-drawer-2' className='drawer-overlay'></label>
 
 			<div className='flex flex-col gap-2 p-3'>
@@ -24,7 +20,9 @@ const Sidebar = () => {
 					<Avatar size='sm'>
 						<img src={user?.picture} alt='avatar' />
 					</Avatar>
-					<span className='badge'>{user?.displayName}</span>
+					<Tooltip className='tooltip-success' data-tip={user?.email} position='bottom'>
+						<span className='badge text-white'>{user?.displayName}</span>
+					</Tooltip>
 				</div>
 
 				<div className='divider'></div>
@@ -32,25 +30,29 @@ const Sidebar = () => {
 				<h3 className='text-lg'>Main</h3>
 				<Menu className=''>
 					<MenuItem>
-						<Link to='/'>Dashboard</Link>
+						<Link to='/'>
+							<BsGrid1X2 /> Dashboard
+						</Link>
 					</MenuItem>
 					<MenuItem className='w-full'>
 						<label>
 							<Collapse
 								title={
 									<>
-										<BiFolder /> Projects
+										<BiFolder /> Projects <span className='badge-primary badge'>{3}</span>
 									</>
 								}
 								tw='w-full'>
 								<Menu>
 									<MenuItem>
-										<label>
+										<label className='text-white' htmlFor='create-project-modal'>
 											<BiPlus /> Create new project
 										</label>
 									</MenuItem>
 									<MenuItem>
-										<Link to={`/projects/1`}>Project 1</Link>
+										<Link to={`/projects/1`}>
+											<BsFolder /> Project 1
+										</Link>
 									</MenuItem>
 								</Menu>
 							</Collapse>
@@ -74,6 +76,13 @@ const Sidebar = () => {
 						<label>
 							<BiDoorOpen /> Sign out
 						</label>
+					</MenuItem>
+				</Menu>
+
+				<h3 className='text-lg'>Settings</h3>
+				<Menu>
+					<MenuItem>
+						<label>Theme</label>
 					</MenuItem>
 				</Menu>
 			</div>

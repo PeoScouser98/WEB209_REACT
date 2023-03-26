@@ -1,4 +1,4 @@
-import { IUser } from '@/types/user.type';
+import { User } from '@/types/user.type';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../axiosBaseQuery';
 
@@ -9,7 +9,7 @@ const authApi = createApi({
 	refetchOnMountOrArgChange: true,
 	endpoints(build) {
 		return {
-			getUser: build.query<IUser, undefined>({
+			getUser: build.query<User, undefined>({
 				query() {
 					return { url: '/user', method: 'GET' };
 				},
