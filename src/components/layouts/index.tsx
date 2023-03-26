@@ -1,6 +1,6 @@
 import Sidebar from '@/components/shared/Sidebar';
 import { Outlet } from 'react-router-dom';
-import CreateProjectForm from '../pages/ProjectPage/CreateProjectForm';
+import CreateProjectForm from '../pages/ProjectPage/components/CreateProjectForm';
 
 const Layout = () => {
 	return (

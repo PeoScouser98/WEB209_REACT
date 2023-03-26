@@ -12,7 +12,7 @@ type CollapseProps = {
 
 const Collapse = (props: CollapseProps) => {
 	return (
-		<div tabIndex={0} className={`collapse-arrow collapse w-full ${props.tw}`} ref={props.ref}>
+		<div tabIndex={0} className={`collapse-arrow collapse w-full ${props.tw}`}>
 			<input type='checkbox' />
 			<div className='collapse-title flex items-center gap-3 p-0'>{props.title}</div>
 			<div className='collapse-content h-fit min-w-full px-1' tabIndex={0}>
@@ -22,4 +22,4 @@ const Collapse = (props: CollapseProps) => {
 	);
 };
 
-export default forwardRef(Collapse);
+export default Collapse;

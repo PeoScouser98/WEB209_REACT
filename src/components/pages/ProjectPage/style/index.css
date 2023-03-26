@@ -1,0 +1,21 @@
+.react-beautiful-dnd-drag-handle {
+	box-sizing: border-box;
+	border-radius: 2px;
+	background-color: #e0e0e0;
+	transition: background-color 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 8px;
+	flex-shrink: 0;
+	height: 24px;
+	width: 24px;
+	color: #000;
+	font-size: 14px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.react-beautiful-dnd-draggable {
+	transition: background-color 0.2s ease;
+}

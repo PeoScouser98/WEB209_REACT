@@ -1,12 +1,10 @@
-import { Dropdown, DropdownContent } from '@/components/@tailwind/Dropdown';
-import { Menu, MenuItem } from '@/components/@tailwind/Menu';
 import { projects } from '@/mocks/projects';
-import React, { Fragment } from 'react';
-import CreateTaskForm from './CreateTaskForm';
-import ProjectInfo from './ProjectInfo';
-import TaskList from './TaskList';
-import { useState } from 'react';
-import { Task } from '@/types/task.type';
+import { Fragment } from 'react';
+import CreateTaskForm from './components/CreateTaskForm';
+import ProjectInfo from './components/ProjectInfo';
+import TaskList from './components/TaskList';
+import './style/index.css';
+
 type Props = {};
 
 const ProjectPage = (props: Props) => {

@@ -1,6 +1,3 @@
-import { Project } from '@/types/project.type';
-import crypto from 'crypto';
-
 export const users = [
 	{
 		_id: 'db470076de94d01ee756adde',
@@ -40,5 +37,5 @@ export const availableAssignees = [
 	},
 ];
 
-const id = crypto.randomBytes(12).toString('hex');
-console.log(id);
+// const id = crypto.randomBytes(12).toString('hex');
+// console.log(id);

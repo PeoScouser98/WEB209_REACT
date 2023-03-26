@@ -12,7 +12,8 @@ import { useState, useEffect } from 'react';
 // #region tailwind styled components
 const Container = tw.div`flex items-start justify-between gap-3 p-3`;
 const List = tw.div`flex flex-col gap-3`;
-const Column = tw.div`bg-base-200 p-2 rounded-lg basis-1/3 min-h-[7rem] flex flex-col gap-6`;
+const ColumnContent = tw.div`min-h-[3rem]`;
+const Column = tw.div`bg-base-200 p-2 rounded-lg basis-1/3 flex flex-col gap-6`;
 // #endregion
 
 const TaskList = ({ taskList }: { taskList: Array<Task> }) => {
@@ -27,8 +28,6 @@ const TaskList = ({ taskList }: { taskList: Array<Task> }) => {
 			console.log('', result.draggableId);
 			return task._id === result.draggableId ? { ...task, status: result.destination?.droppableId! } : task;
 		});
-		// console.log(updatedTaskList);
-		// setTasks(updatedTaskList);
 	};
 	const columnStyle = (status: string) => {
 		switch (status) {
@@ -45,26 +44,25 @@ const TaskList = ({ taskList }: { taskList: Array<Task> }) => {
 		<DragDropContext onDragEnd={handleOnDragEnd}>
 			<Container>
 				{STATUS.map((status, index) => (
-					<Droppable droppableId={status.value} key={index}>
-						{(provided) => {
-							return (
-								<Column ref={provided.innerRef} key={index} {...provided.droppableProps}>
-									<span className={`badge badge-lg capitalize ${columnStyle(status.value)}`}>
-										{status.title}
-									</span>
-
-									<List>
-										{taskList
-											.filter((task, index) => task.status === status.value)
-											.map((task, index) => (
-												<TaskItem key={task._id} task={task} index={index} />
-											))}
-										{/* {provided.placeholder} */}
-									</List>
-								</Column>
-							);
-						}}
-					</Droppable>
+					<Column>
+						<span className={`badge badge-lg capitalize ${columnStyle(status.value)}`}>{status.title}</span>
+						<Droppable droppableId={status.value} key={index}>
+							{(provided) => {
+								return (
+									<ColumnContent ref={provided.innerRef} key={index} {...provided.droppableProps}>
+										<List>
+											{taskList
+												.filter((task, index) => task.status === status.value)
+												.map((task, index) => (
+													<TaskItem key={task._id} task={task} index={index} />
+												))}
+											{/* {provided.placeholder} */}
+										</List>
+									</ColumnContent>
+								);
+							}}
+						</Droppable>
+					</Column>
 				))}
 			</Container>
 		</DragDropContext>
