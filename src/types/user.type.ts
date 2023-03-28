@@ -7,3 +7,9 @@ export interface User {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface Member {
+	info: Partial<User>;
+	role: string;
+	joinedAt: Date | string;
+}

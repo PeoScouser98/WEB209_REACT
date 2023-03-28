@@ -4,9 +4,10 @@ export interface Task {
 	_id: string;
 	title: string;
 	creator: Partial<User>;
+	project: string;
 	assignee: Partial<User>;
-	startedAt: Date | string;
-	deadline: Date | string;
+	startedAt: Date;
+	deadline: Date;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 	description: string;

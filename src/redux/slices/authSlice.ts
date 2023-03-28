@@ -1,7 +1,11 @@
 import { Auth } from '@/types/auth.type';
-import { createSlice } from '@reduxjs/toolkit';
+import instance from '@/utils/axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authApi from '../apis/authApi';
 
+export const signoutThunkAction = createAsyncThunk('auth/signout', async () => {
+	return await instance.get('/signout');
+});
 const initialState: Auth = {
 	user: null,
 	authenticated: false,
@@ -10,10 +14,14 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState: initialState,
 	reducers: {},
-	extraReducers: (builder) => {
-		builder.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
-			console.log(action.payload);
+	extraReducers(build) {
+		build.addCase(signoutThunkAction.fulfilled, (state, action) => {
+			state.user = null;
+			state.authenticated = false;
+		});
+		build.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
 			state.user = action.payload;
+			state.authenticated = true;
 		});
 	},
 });

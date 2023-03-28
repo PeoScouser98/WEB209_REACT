@@ -84,6 +84,7 @@ export const SelectFieldControl = (props: Props) => {
 						onChange={onChange}
 						id={id}
 						placeholder={props.placeholder}>
+						<option>Select</option>
 						{props.render()}
 					</select>
 					{error && <small className='font-medium text-error'>{error.message}</small>}

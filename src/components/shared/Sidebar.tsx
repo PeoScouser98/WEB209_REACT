@@ -1,6 +1,8 @@
-import { useAppSelector } from '@/redux/reduxHook';
+import { useGetJoinedProjectsQuery } from '@/redux/apis/projectApi';
+import { useAppDispatch, useAppSelector } from '@/redux/reduxHook';
+import { signoutThunkAction } from '@/redux/slices/authSlice';
 import { BiDoorOpen, BiFolder, BiPlus } from 'react-icons/bi';
-import { BsFolder, BsGrid1X2, BsGrid1X2Fill, BsPerson } from 'react-icons/bs';
+import { BsFolder, BsGrid1X2, BsPerson } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom';
 import Avatar from '../@tailwind/Avatar';
 import Collapse from '../@tailwind/Collapse';
@@ -9,10 +11,16 @@ import Tooltip from '../@tailwind/Tooltip';
 
 const Sidebar = () => {
 	const { user } = useAppSelector((state) => state.auth);
+	const { data: joinedProject } = useGetJoinedProjectsQuery(undefined, { refetchOnMountOrArgChange: true });
+	console.log(joinedProject);
 	const location = useLocation();
+	const dispatch = useAppDispatch();
+	const handleSignout = async () => {
+		await dispatch(signoutThunkAction());
+	};
 
 	return (
-		<div className='drawer-side min-w-[320px] bg-neutral-focus text-neutral-content'>
+		<div className='drawer-side min-w-[280px] bg-neutral-focus text-neutral-content'>
 			<label htmlFor='my-drawer-2' className='drawer-overlay'></label>
 
 			<div className='flex flex-col gap-2 p-3'>
@@ -49,11 +57,14 @@ const Sidebar = () => {
 											<BiPlus /> Create new project
 										</label>
 									</MenuItem>
-									<MenuItem>
-										<Link to={`/projects/1`}>
-											<BsFolder /> Project 1
-										</Link>
-									</MenuItem>
+									{Array.isArray(joinedProject) &&
+										joinedProject?.map((project) => (
+											<MenuItem>
+												<Link to={`/projects/${project._id}`}>
+													<BsFolder /> {project.projectName}
+												</Link>
+											</MenuItem>
+										))}
 								</Menu>
 							</Collapse>
 						</label>
@@ -73,6 +84,8 @@ const Sidebar = () => {
 						<label>
 							<BsPerson /> Profile
 						</label>
+					</MenuItem>
+					<MenuItem onClick={handleSignout}>
 						<label>
 							<BiDoorOpen /> Sign out
 						</label>

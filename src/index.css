@@ -3,6 +3,24 @@
 @tailwind utilities;
 
 @layer components {
+	/*#region loading */
+	.loading-spinner {
+		@apply pointer-events-none animate-spin rounded-full border-transparent border-t-success border-r-success;
+	}
+	.loading-spinner-xs {
+		@apply h-4 w-4  border-[3px];
+	}
+	.loading-spinner-sm {
+		@apply h-6 w-6  border-[3px];
+	}
+	.loading-spinner-md {
+		@apply h-10 w-10  border-4;
+	}
+	.loading-spinner-lg {
+		@apply h-14 w-14  border-4;
+	}
+	/*#endregion */
+
 	.menu :where(li:not(.menu-title):not(:empty)) > :where(:not(ul).active),
 	.menu :where(li:not(.menu-title):not(:empty)) > :where(*:not(ul):active) {
 		@apply bg-neutral-content/20;

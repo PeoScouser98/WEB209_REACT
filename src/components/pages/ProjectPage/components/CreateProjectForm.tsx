@@ -1,5 +1,6 @@
 import Button from '@/components/@tailwind/Button';
 import { TextFieldControl } from '@/components/@tailwind/FormControls';
+import { useCreateProjectMutation } from '@/redux/apis/projectApi';
 import { getCurrentDate } from '@/utils/getDate';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,8 +9,11 @@ type Props = {};
 
 const CreateProjectForm = (props: Props) => {
 	const { control, handleSubmit } = useForm();
+	const [createProject, status] = useCreateProjectMutation();
+
 	const onHandleSubmit = async (data: any) => {
-		console.log(data);
+		const newProject = await createProject(data);
+		console.log(newProject);
 	};
 
 	return (
@@ -32,13 +36,13 @@ const CreateProjectForm = (props: Props) => {
 							}}
 							type='text'
 						/>
-						<TextFieldControl control={control} name='customer' label={`Customer`} type='text' />
 						<TextFieldControl
 							control={control}
 							name='startedAt'
 							label='Start at'
 							type='date'
 							min={getCurrentDate()}
+							rules={{ required: { value: true, message: 'Starting date must be provided!' } }}
 						/>
 						<TextFieldControl
 							control={control}
@@ -46,8 +50,13 @@ const CreateProjectForm = (props: Props) => {
 							label={`Estimate to complete at`}
 							type='date'
 							min={getCurrentDate()}
+							rules={{ required: { value: true, message: 'Estimate complete date must be provided!' } }}
 						/>
-						<Button type='submit' className='normal-case'>
+						<Button
+							type='submit'
+							className='normal-case'
+							isLoading={status.isLoading}
+							disabled={status.isLoading}>
 							Save
 						</Button>
 					</form>

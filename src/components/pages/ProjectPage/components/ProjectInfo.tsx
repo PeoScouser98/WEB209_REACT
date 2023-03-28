@@ -10,7 +10,7 @@ const ProjectInfo = ({ currentProject }: { currentProject: Project }) => {
 		<div className='flex items-start justify-between'>
 			<div className='flex items-center justify-between p-3'>
 				<div>
-					<h3 className='mb-3 text-2xl font-medium'>{currentProject.projectName}</h3>
+					<h3 className='mb-3 text-2xl font-medium'>{currentProject?.projectName}</h3>
 					<Dropdown>
 						<DropdownContent>
 							<Menu>

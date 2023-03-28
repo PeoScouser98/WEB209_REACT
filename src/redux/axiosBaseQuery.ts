@@ -1,7 +1,7 @@
-import '@/configs/axios.config';
+import '@/utils/axios';
+import instance from '@/utils/axios';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { AxiosError, AxiosRequestConfig } from 'axios';
-import axios from 'axios';
 
 export default function axiosBaseQuery(): BaseQueryFn<
 	{
@@ -15,14 +15,13 @@ export default function axiosBaseQuery(): BaseQueryFn<
 > {
 	return async ({ url, method, data, params }) => {
 		try {
-			const response = await axios.request({ url, method, data, params });
+			const response = await instance.request({ url, method, data, params });
 			return { data: response };
 		} catch (axiosError) {
-			let err = axiosError as AxiosError;
 			return {
 				error: {
-					status: err.response?.status,
-					data: err.response?.data || err.message,
+					status: (axiosError as AxiosError).response?.status,
+					data: (axiosError as AxiosError).response?.data || (axiosError as AxiosError).message,
 				},
 			};
 		}

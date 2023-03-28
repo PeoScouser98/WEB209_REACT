@@ -1,10 +1,14 @@
 import Button from '@/components/@tailwind/Button';
+import { useAppSelector } from '@/redux/reduxHook';
 import { BsGithub } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
+import { Navigate } from 'react-router-dom';
 import Logo from '/react.svg';
 
 export default function SignIn() {
-	return (
+	const { authenticated } = useAppSelector((state) => state.auth);
+
+	return !authenticated ? (
 		<div className='hero min-h-screen bg-base-200'>
 			<div className='hero-content flex-col xl:flex-row-reverse'>
 				<div className='card min-w-[320px] bg-base-100 shadow-2xl'>
@@ -40,5 +44,7 @@ export default function SignIn() {
 				</div>
 			</div>
 		</div>
+	) : (
+		<Navigate to='/' />
 	);
 }

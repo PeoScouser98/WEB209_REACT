@@ -9,9 +9,9 @@ const authApi = createApi({
 	refetchOnMountOrArgChange: true,
 	endpoints(build) {
 		return {
-			getUser: build.query<User, undefined>({
+			getUser: build.query<User, void>({
 				query() {
-					return { url: '/user', method: 'GET' };
+					return { url: '/user', method: 'get' };
 				},
 				providesTags: ['Auth'],
 			}),
