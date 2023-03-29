@@ -2,11 +2,16 @@ import Avatar from '@/components/@tailwind/Avatar';
 import Button from '@/components/@tailwind/Button';
 import Collapse from '@/components/@tailwind/Collapse';
 import Tooltip from '@/components/@tailwind/Tooltip';
+import { useAppDispatch } from '@/redux/reduxHook';
+import { setCurrentTask } from '@/redux/slices/taskSlice';
 import { Task } from '@/types/task.type';
+import { memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 
 const TaskItem = ({ task, index }: { task: Task; index: number }) => {
+	const dispatch = useAppDispatch();
+
 	return (
 		<Draggable draggableId={task._id} index={index}>
 			{(provided, snapshot) => {
@@ -59,9 +64,12 @@ const TaskItem = ({ task, index }: { task: Task; index: number }) => {
 							</table>
 							<div className='flex items-center justify-end gap-2'>
 								<Tooltip position='left' data-tip='Edit'>
-									<Button color='ghost' size='sm' shape='square'>
+									<label
+										htmlFor='update-task-form'
+										className='btn-ghost btn-sm btn-square btn'
+										onClick={() => dispatch(setCurrentTask(task))}>
 										<BsPencil />
-									</Button>
+									</label>
 								</Tooltip>
 								<Tooltip position='left' data-tip='Delete'>
 									<Button color='ghost' size='sm' shape='square'>
@@ -77,4 +85,4 @@ const TaskItem = ({ task, index }: { task: Task; index: number }) => {
 	);
 };
 
-export default TaskItem;
+export default memo(TaskItem);

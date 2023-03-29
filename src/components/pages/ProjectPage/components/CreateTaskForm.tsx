@@ -1,6 +1,7 @@
 import Button from '@/components/@tailwind/Button';
 import { LongTextFieldControl, SelectFieldControl, TextFieldControl } from '@/components/@tailwind/FormControls';
 import { useCreateTaskMutation } from '@/redux/apis/taskApi';
+import { Task } from '@/types/task.type';
 import { Member } from '@/types/user.type';
 import instance from '@/utils/axios';
 import { getCurrentDate } from '@/utils/getDate';
@@ -8,10 +9,17 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-const CreateTaskForm = ({ members }: { members: Array<Member> }) => {
-	const { handleSubmit, control } = useForm();
+const CreateTaskForm = ({ members, task }: { members: Array<Member>; task?: Task }) => {
+	const { handleSubmit, control, reset } = useForm();
 	const [createTask] = useCreateTaskMutation();
 	const { id } = useParams();
+
+	useEffect(() => {
+		if (task) {
+			reset(task);
+		}
+	}, [task]);
+
 	const handleOnSubmit = async (data: any) => {
 		console.log(data);
 		const newTask = await createTask({ projectId: id!, newTask: { project: id!, ...data } });

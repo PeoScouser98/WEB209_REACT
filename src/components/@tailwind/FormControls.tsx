@@ -8,6 +8,7 @@ type Props = {
 	options?: Array<{ [key: string]: any }>;
 	control: Control<FieldValues, any>;
 	name: string;
+	disabled?: boolean;
 	rules?: Pick<RegisterOptions<FieldValues>, 'maxLength' | 'minLength' | 'validate' | 'required'>;
 	[key: string]: any;
 };
@@ -30,6 +31,8 @@ export const TextFieldControl = (props: Props) => {
 						className='input-bordered input sm:input-sm'
 						onChange={onChange}
 						id={id}
+						disabled={props.disabled}
+						defaultValue={value}
 						placeholder={props.placeholder}
 						min={props.min}
 					/>
@@ -57,6 +60,7 @@ export const LongTextFieldControl = (props: Props) => {
 						className='textarea-bordered textarea sm:textarea-sm'
 						onChange={onChange}
 						id={id}
+						defaultValue={value}
 						placeholder={props.placeholder}></textarea>
 					{error && <small className='font-medium text-error'>{error.message}</small>}
 				</div>
@@ -76,20 +80,26 @@ export const SelectFieldControl = (props: Props) => {
 				field: { onChange, onBlur, value, ref },
 				fieldState: { invalid, isTouched, isDirty, error },
 				formState,
-			}) => (
-				<div className='form-control'>
-					<label htmlFor={id}>{props.label ?? ''}</label>
-					<select
-						className='select-bordered select sm:select-sm'
-						onChange={onChange}
-						id={id}
-						placeholder={props.placeholder}>
-						<option>Select</option>
-						{props.render()}
-					</select>
-					{error && <small className='font-medium text-error'>{error.message}</small>}
-				</div>
-			)}
+			}) => {
+				console.log(props.disabled);
+
+				return (
+					<div className='form-control'>
+						<label htmlFor={id}>{props.label ?? ''}</label>
+						<select
+							className='select-bordered select sm:select-sm'
+							onChange={onChange}
+							id={id}
+							disabled={props.disabled}
+							defaultValue={value}
+							placeholder={props.placeholder}>
+							<option>Select</option>
+							{props.render()}
+						</select>
+						{error && <small className='font-medium text-error'>{error.message}</small>}
+					</div>
+				);
+			}}
 			rules={props.rules}
 		/>
 	);

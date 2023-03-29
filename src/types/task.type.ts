@@ -6,10 +6,10 @@ export interface Task {
 	creator: Partial<User>;
 	project: string;
 	assignee: Partial<User>;
-	startedAt: Date;
-	deadline: Date;
-	createdAt?: Date | string;
-	updatedAt?: Date | string;
+	startedAt: string;
+	deadline: string;
+	createdAt?: string;
+	updatedAt?: string;
 	description: string;
 	status: string;
 }

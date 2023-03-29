@@ -15,7 +15,7 @@ export function getCurrentDate(): string {
 	return `${year}-${month}-${day}`;
 }
 
-export function getLocaleDateString(entryDate: string): string {
+export function formatToLocaleDateString(entryDate: string): string {
 	const date = new Date(entryDate);
 	let year = date.getFullYear();
 	let month: string | number = date.getMonth() + 1;

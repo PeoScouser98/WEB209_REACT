@@ -1,7 +1,8 @@
 import Sidebar from '@/components/shared/Sidebar';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import CreateProjectForm from '../pages/ProjectPage/components/CreateProjectForm';
+import ProjectFormModal from '../pages/ProjectPage/components/ProjectFormModal';
+import EditTaskModal from '../pages/ProjectPage/components/EditTaskForm';
 import PageLoading from '../shared/PageLoading';
 
 const Layout = () => {
@@ -14,7 +15,8 @@ const Layout = () => {
 				</Suspense>
 			</div>
 			<Sidebar />
-			<CreateProjectForm />
+			<ProjectFormModal />
+			<EditTaskModal />
 		</div>
 	);
 };

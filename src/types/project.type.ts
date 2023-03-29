@@ -6,6 +6,7 @@ export interface Project {
 	projectName: string;
 	creator: Partial<User>;
 	members: Array<Member>;
-	estimatedCompleteDate: Date | string;
+	startedAt: string;
+	estimatedCompleteDate: string;
 	tasks?: Array<Task>;
 }

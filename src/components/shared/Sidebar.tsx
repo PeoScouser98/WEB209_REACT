@@ -1,6 +1,7 @@
 import { useGetJoinedProjectsQuery } from '@/redux/apis/projectApi';
 import { useAppDispatch, useAppSelector } from '@/redux/reduxHook';
 import { signoutThunkAction } from '@/redux/slices/authSlice';
+import { ProjectActions, setProjectFormAction } from '@/redux/slices/projectSlice';
 import { BiDoorOpen, BiFolder, BiPlus } from 'react-icons/bi';
 import { BsFolder, BsGrid1X2, BsPerson } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,8 +12,7 @@ import Tooltip from '../@tailwind/Tooltip';
 
 const Sidebar = () => {
 	const { user } = useAppSelector((state) => state.auth);
-	const { data: joinedProject } = useGetJoinedProjectsQuery(undefined, { refetchOnMountOrArgChange: true });
-	console.log(joinedProject);
+	const { data: joinedProjects } = useGetJoinedProjectsQuery(undefined, { refetchOnMountOrArgChange: true });
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 	const handleSignout = async () => {
@@ -47,18 +47,19 @@ const Sidebar = () => {
 							<Collapse
 								title={
 									<>
-										<BiFolder /> Projects <span className='badge-primary badge'>{3}</span>
+										<BiFolder /> Projects{' '}
+										<span className='badge-primary badge'>{joinedProjects!.length}</span>
 									</>
 								}
 								tw='w-full'>
 								<Menu>
-									<MenuItem>
-										<label className='text-white' htmlFor='create-project-modal'>
+									<MenuItem onClick={() => dispatch(setProjectFormAction(ProjectActions.create))}>
+										<label className='text-white' htmlFor='project-modal'>
 											<BiPlus /> Create new project
 										</label>
 									</MenuItem>
-									{Array.isArray(joinedProject) &&
-										joinedProject?.map((project) => (
+									{Array.isArray(joinedProjects) &&
+										joinedProjects?.map((project) => (
 											<MenuItem>
 												<Link to={`/projects/${project._id}`}>
 													<BsFolder /> {project.projectName}

@@ -2,7 +2,8 @@ import { Project } from '@/types/project.type';
 import { User } from '@/types/user.type';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../axiosBaseQuery';
-
+import { formatToLocaleDateString } from '@/utils/getDate';
+import { setCurrentProject } from '../slices/projectSlice';
 const projectApi = createApi({
 	reducerPath: 'projectApi',
 	tagTypes: ['Projects'],
@@ -17,6 +18,12 @@ const projectApi = createApi({
 		getCurrentProject: build.query<Project, string>({
 			query(id) {
 				return { url: `/projects/${id}`, method: 'get' };
+			},
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled;
+					dispatch(setCurrentProject(data));
+				} catch (error) {}
 			},
 		}),
 		createProject: build.mutation<Project, Omit<Project, '_id'>>({
