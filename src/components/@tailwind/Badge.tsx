@@ -1,7 +1,10 @@
 import tw from 'tailwind-styled-components';
-import { TwProps } from '@/types/twProps.type';
 
-const Badge = tw.span`badge ${(props: TwProps<string>) => {
+interface IBadgeProps extends React.HTMLAttributes<HTMLElement> {
+	type?: string;
+}
+
+const Badge = tw.span`badge ${(props: IBadgeProps) => {
 	switch (props.type) {
 		case 'primary':
 			return 'badge-primary';

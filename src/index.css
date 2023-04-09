@@ -5,7 +5,7 @@
 @layer components {
 	/*#region loading */
 	.loading-spinner {
-		@apply pointer-events-none animate-spin rounded-full border-transparent border-t-success border-r-success;
+		@apply pointer-events-none animate-spin rounded-full border-transparent border-t-white border-r-white;
 	}
 	.loading-spinner-xs {
 		@apply h-4 w-4  border-[3px];
@@ -31,7 +31,7 @@
 	}
 
 	.table :where(thead, tfoot) :where(th, td) {
-		@apply bg-neutral text-neutral-content;
+		@apply bg-base-300 text-neutral-content;
 	}
 
 	/*#region scrollbar */

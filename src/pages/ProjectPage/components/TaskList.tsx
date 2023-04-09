@@ -1,14 +1,16 @@
 // #region imports
-import { Task } from '@/types/task.type';
-import { Fragment } from 'react';
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { STATUS } from '@/constants/task.const';
+import { useGetTasksByProjectQuery, useUpdateTaskMutation } from '@/redux/apis/taskApi';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useParams } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 import TaskItem from './TaskItem';
-import { STATUS } from '@/constants/taskStatus.const';
-import { useState, useEffect } from 'react';
-import { useGetTasksByProjectQuery, useUpdateTaskMutation } from '@/redux/apis/taskApi';
-import { useParams } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { Task } from '@/types/task.type';
 import instance from '@/utils/axios';
+import { setTimeout } from 'timers/promises';
+import { Result } from 'postcss';
+import { tasks } from '@/mocks/tasks';
 
 // #endregion
 
@@ -20,26 +22,33 @@ const Column = tw.div`bg-base-200 p-2 rounded-lg basis-1/3 flex flex-col gap-6`;
 // #endregion
 
 const TaskList = () => {
-	const { id } = useParams();
-	let { data: taskList } = useGetTasksByProjectQuery(id!);
+	const { id: projectId } = useParams();
+	const { data } = useGetTasksByProjectQuery(projectId!);
 	const [updateTask] = useUpdateTaskMutation();
+	const [taskList, setTaskList] = useState<Array<Task>>(data!);
+
+	useEffect(() => {
+		setTaskList(data!);
+	}, [data]);
 
 	const handleOnDragEnd = async (result: DropResult) => {
-		console.log(result);
 		if (!result.destination) return;
 		if (result.destination.droppableId !== result.source.droppableId) {
+			setTaskList((prev: Array<Task>) => {
+				return prev.map((task) =>
+					task._id === result.draggableId ? { ...task, status: result.destination?.droppableId! } : task
+				);
+			});
+
 			await updateTask({
 				id: result.draggableId,
 				data: { status: result.destination?.droppableId! },
-				params: { projectId: id! },
-			}).then(() => {
-				taskList = taskList?.map((task) =>
-					task._id === result.draggableId ? { ...task, status: result.destination?.droppableId } : task
-				) as Array<Task>;
+				params: { projectId: projectId! },
 			});
+		} else {
+			const [reorderedTask] = taskList!.splice(result.source.index, 1);
+			setTaskList(taskList!.splice(result.destination.index, 0, reorderedTask));
 		}
-		const [reorderedTask] = taskList!.splice(result.source.index, 1);
-		taskList = taskList!.splice(result.destination.index, 0, reorderedTask);
 	};
 
 	const columnStyle = (status: string) => {

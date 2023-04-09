@@ -3,31 +3,38 @@ import { createSlice } from '@reduxjs/toolkit';
 import projectApi from '../apis/projectApi';
 
 export enum ProjectActions {
-	create = 'CREATE',
-	edit = 'EDIT',
+	CREATE = 'CREATE',
+	EDIT = 'EDIT',
 }
 
 type InitialState = {
-	currentProject: Project | null;
+	joinedProjects: Array<Project>;
+	currentProject: Project | undefined;
 	formAction: ProjectActions;
 };
 
 const initialState: InitialState = {
-	currentProject: null,
-	formAction: ProjectActions.create,
+	joinedProjects: [],
+	currentProject: undefined,
+	formAction: ProjectActions.CREATE,
 };
 
 const projectSlice = createSlice({
 	name: 'project',
 	initialState: initialState,
 	reducers: {
-		setCurrentProject(state, { payload }) {
-			state.currentProject = payload;
-		},
-		setProjectFormAction(state, { payload }: { payload: ProjectActions }) {
-			state.formAction = payload;
+		setProjectFormAction(state, { payload }) {
+			return { ...state, formAction: payload };
 		},
 	},
+	extraReducers(builder) {
+		builder.addMatcher(projectApi.endpoints.getJoinedProjects.matchFulfilled, (state, { payload }) => {
+			state.joinedProjects = payload;
+		});
+		builder.addMatcher(projectApi.endpoints.getCurrentProject.matchFulfilled, (state, { payload }) => {
+			state.currentProject = payload;
+		});
+	},
 });
-export const { setCurrentProject, setProjectFormAction } = projectSlice.actions;
+export const { setProjectFormAction } = projectSlice.actions;
 export default projectSlice;

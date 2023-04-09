@@ -5,10 +5,12 @@ import authApi from './apis/authApi';
 import projectApi from './apis/projectApi';
 import taskApi from './apis/taskApi';
 import rootReducer from './rootReducer';
+import activityApi from './apis/activityApi';
 
 const persistConfig = {
 	key: 'root',
 	storage,
+	blacklist: [],
 };
 
 const persitedReducer = persistReducer(persistConfig, rootReducer);
@@ -19,7 +21,7 @@ const store = configureStore({
 			serializableCheck: {
 				ignoredActions: [REGISTER, FLUSH, PERSIST, PURGE, PAUSE],
 			},
-		}).concat([authApi.middleware, projectApi.middleware, taskApi.middleware]),
+		}).concat([authApi.middleware, projectApi.middleware, taskApi.middleware, activityApi.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

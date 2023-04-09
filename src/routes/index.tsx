@@ -1,17 +1,14 @@
-import Loading from '@/components/@tailwind/Loading';
-import Layout from '@/components/layouts';
-import PrivateLayout from '@/components/layouts/PrivateLayout';
 import PageLoading from '@/components/shared/PageLoading';
+import Layout from '@/layouts/MainLayout';
+import PrivateLayout from '@/layouts/PrivateLayout';
 import { lazy, Suspense } from 'react';
-const Dashboard = lazy(() => import('@/components/pages/Dashboard'));
-const ProjectPage = lazy(() => import('@/components/pages/ProjectPage'));
-const SignIn = lazy(() => import('@/components/pages/SignPage'));
-const SigninSuccess = lazy(() => import('@/components/pages/SignPage/SigninSuccess'));
-import { BrowserRouter, createBrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const ProjectPage = lazy(() => import('@/pages/ProjectPage'));
+const SignIn = lazy(() => import('@/pages/SignPage'));
+const SigninSuccess = lazy(() => import('@/pages/SignPage/SigninSuccess'));
 
 const AppRouter = () => {
-	const router = createBrowserRouter([{}]);
-
 	return (
 		<BrowserRouter>
 			<Routes>

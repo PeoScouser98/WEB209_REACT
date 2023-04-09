@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
 	_id: string;
 	email: string;
 	displayName: string;
@@ -9,7 +9,7 @@ export interface User {
 }
 
 export interface Member {
-	info: Partial<User>;
+	info: Partial<IUser>;
 	role: string;
 	joinedAt: Date | string;
 }

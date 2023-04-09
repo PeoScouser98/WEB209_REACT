@@ -2,7 +2,7 @@ import React, { useId } from 'react';
 import { useForm, Controller, Control, FieldValues } from 'react-hook-form';
 import { RegisterOptions } from 'react-hook-form/dist/types';
 
-type Props = {
+interface IFormControlProps {
 	type?: string;
 	label?: string;
 	options?: Array<{ [key: string]: any }>;
@@ -11,19 +11,15 @@ type Props = {
 	disabled?: boolean;
 	rules?: Pick<RegisterOptions<FieldValues>, 'maxLength' | 'minLength' | 'validate' | 'required'>;
 	[key: string]: any;
-};
+}
 
-export const TextFieldControl = (props: Props) => {
+export const TextFieldControl = (props: IFormControlProps) => {
 	const id = useId();
 	return (
 		<Controller
 			control={props.control}
 			name={props.name}
-			render={({
-				field: { onChange, onBlur, value, ref },
-				fieldState: { invalid, isTouched, isDirty, error },
-				formState,
-			}) => (
+			render={({ field: { onChange, onBlur, value, ref }, fieldState: { invalid, isTouched, isDirty, error }, formState }) => (
 				<div className='form-control'>
 					<label htmlFor={id}>{props.label ?? ''}</label>
 					<input
@@ -43,17 +39,13 @@ export const TextFieldControl = (props: Props) => {
 		/>
 	);
 };
-export const LongTextFieldControl = (props: Props) => {
+export const LongTextFieldControl = (props: IFormControlProps) => {
 	const id = useId();
 	return (
 		<Controller
 			control={props.control}
 			name={props.name}
-			render={({
-				field: { onChange, onBlur, value, ref },
-				fieldState: { invalid, isTouched, isDirty, error },
-				formState,
-			}) => (
+			render={({ field: { onChange, onBlur, value, ref }, fieldState: { invalid, isTouched, isDirty, error }, formState }) => (
 				<div className='form-control'>
 					<label htmlFor={id}>{props.label ?? ''}</label>
 					<textarea
@@ -70,19 +62,13 @@ export const LongTextFieldControl = (props: Props) => {
 	);
 };
 
-export const SelectFieldControl = (props: Props) => {
+export const SelectFieldControl = (props: IFormControlProps) => {
 	const id = useId();
 	return (
 		<Controller
 			control={props.control}
 			name={props.name}
-			render={({
-				field: { onChange, onBlur, value, ref },
-				fieldState: { invalid, isTouched, isDirty, error },
-				formState,
-			}) => {
-				console.log(props.disabled);
-
+			render={({ field: { onChange, onBlur, value, ref }, fieldState: { invalid, isTouched, isDirty, error }, formState }) => {
 				return (
 					<div className='form-control'>
 						<label htmlFor={id}>{props.label ?? ''}</label>

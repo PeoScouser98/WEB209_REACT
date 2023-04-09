@@ -15,17 +15,15 @@ const authSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		signout(state, action) {
-			state = initialState;
+			return initialState;
 		},
 	},
 	extraReducers(build) {
-		build.addCase(signoutThunkAction.fulfilled, (state, action) => {
-			state.user = null;
-			state.authenticated = false;
+		build.addMatcher(authApi.endpoints.signout.matchFulfilled, (state, action) => {
+			return initialState;
 		});
 		build.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
-			state.user = action.payload;
-			state.authenticated = true;
+			return { user: action.payload, authenticated: true };
 		});
 	},
 });

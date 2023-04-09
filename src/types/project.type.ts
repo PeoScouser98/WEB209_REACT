@@ -1,10 +1,10 @@
 import { Task } from './task.type';
-import { Member, User } from './user.type';
+import { Member, IUser } from './user.type';
 
 export interface Project {
 	_id: string;
 	projectName: string;
-	creator: Partial<User>;
+	creator: Partial<IUser>;
 	members: Array<Member>;
 	startedAt: string;
 	estimatedCompleteDate: string;

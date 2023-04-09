@@ -1,4 +1,4 @@
-import { signout, signoutThunkAction } from '@/redux/slices/authSlice';
+import { signout } from '@/redux/slices/authSlice';
 import store from '@/redux/store';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 const instance = axios.create({
@@ -17,22 +17,19 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
 	({ data, config }) => {
-		return data;
+		return data as AxiosResponse<any>;
 	},
 	async (error) => {
 		const { response, config } = error;
-
-		if (response.data.status === 401 && response.data.message === 'jwt must be provided') {
-			store.dispatch(signout(null));
-		}
-
 		if (response.data.status === 401 && response.data.message === 'jwt expired') {
 			console.log('Access token expired!');
 			const newAccessToken = await instance.get('/refresh-token');
 			console.log(`Refresh token: ${newAccessToken}`);
 			return await instance.request(config);
 		}
-
+		if (response.data.status === 401 && response.data.message === 'jwt must be provided') {
+			store.dispatch(signout(null));
+		}
 		return Promise.reject(error);
 	}
 );

@@ -1,7 +1,13 @@
 import tw from 'tailwind-styled-components';
-import { TwProps } from '@/types/twProps.type';
-const Typography = tw.h1`font-semibold sm:text-2xl mb-6
-${(props: TwProps<string>) => {
+interface ITypographyProps extends React.HTMLAttributes<HTMLElement> {
+	fontWeight?: string;
+	align?: string;
+	size?: string;
+	transform?: string;
+}
+
+const Typography = tw.h1`font-semibold sm:text-2xl mb-6'
+${(props: ITypographyProps) => {
 	switch (props.fontWeight) {
 		case 'thin':
 			return 'font-thin';
@@ -27,7 +33,7 @@ ${(props: TwProps<string>) => {
 
 
 
-${(props: TwProps<string>) => {
+${(props: ITypographyProps) => {
 	switch (props.align) {
 		case 'left':
 			return 'text-left';
@@ -42,7 +48,7 @@ ${(props: TwProps<string>) => {
 	}
 }}
 
-${(props: TwProps<string>) => {
+${(props: ITypographyProps) => {
 	switch (props.size) {
 		case 'xs':
 			return 'text-xs';
@@ -72,7 +78,7 @@ ${(props: TwProps<string>) => {
 	}
 }}
 
-${(props: TwProps<string>) => {
+${(props: ITypographyProps) => {
 	switch (props.transform) {
 		case 'normal':
 			return 'normal-case';

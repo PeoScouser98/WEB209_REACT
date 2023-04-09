@@ -1,4 +1,4 @@
-import Button from '@/components/@tailwind/Button';
+import StyledButton from '@/components/@tailwind/Button';
 import { TextFieldControl } from '@/components/@tailwind/FormControls';
 import { useCreateProjectMutation, useUpdateProjectsMutation } from '@/redux/apis/projectApi';
 import { useAppSelector } from '@/redux/reduxHook';
@@ -14,30 +14,30 @@ const ProjectFormModal = (props: Props) => {
 	const [createProject, status] = useCreateProjectMutation();
 	const [editProject] = useUpdateProjectsMutation();
 	const { formAction, currentProject } = useAppSelector((state) => state.project);
+	const initialFormValue = { projectName: null, estimatedCompletedate: '' };
 
 	useEffect(() => {
-		if (formAction === ProjectActions.create) {
-			reset();
-		} else {
-			reset({
-				projectName: currentProject?.projectName!,
-				estimatedCompleteDate: formatToLocaleDateString(currentProject?.estimatedCompleteDate!),
-			});
-		}
-	}, [formAction]);
+		switch (formAction) {
+			case ProjectActions.CREATE:
+				reset(initialFormValue);
+				break;
 
-	const onHandleSubmit = async (data: any) => {
+			case ProjectActions.EDIT:
+				reset(currentProject);
+				break;
+		}
+	}, [formAction, currentProject]);
+
+	const handleCreateOrEditProject = async (data: any) => {
 		try {
 			switch (formAction) {
-				case ProjectActions.create:
-					const newProject = await createProject(data);
+				case ProjectActions.CREATE:
+					await createProject(data);
 					alert('Create new project!');
 					break;
-				case ProjectActions.edit:
+				case ProjectActions.EDIT:
 					await editProject({ id: currentProject?._id!, data: data });
 					alert('Updated project');
-					break;
-				default:
 					break;
 			}
 		} catch (error) {}
@@ -52,7 +52,7 @@ const ProjectFormModal = (props: Props) => {
 						✕
 					</label>
 					<h3 className='mb-6 text-lg font-bold lowercase first-letter:uppercase'>{formAction} project</h3>
-					<form className='flex flex-col gap-6' onSubmit={handleSubmit(onHandleSubmit)}>
+					<form className='flex flex-col gap-6' onSubmit={handleSubmit(handleCreateOrEditProject)}>
 						<TextFieldControl
 							control={control}
 							name='projectName'
@@ -72,13 +72,9 @@ const ProjectFormModal = (props: Props) => {
 							min={getCurrentDate()}
 							rules={{ required: { value: true, message: 'Estimate complete date must be provided!' } }}
 						/>
-						<Button
-							type='submit'
-							className='normal-case'
-							isLoading={status.isLoading}
-							disabled={status.isLoading}>
+						<StyledButton type='submit' className='normal-case' isLoading={status.isLoading} disabled={status.isLoading}>
 							Save
-						</Button>
+						</StyledButton>
 					</form>
 				</div>
 			</div>

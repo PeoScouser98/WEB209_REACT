@@ -1,9 +1,9 @@
 import { Project } from '@/types/project.type';
-import { User } from '@/types/user.type';
+import { IUser } from '@/types/user.type';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../axiosBaseQuery';
 import { formatToLocaleDateString } from '@/utils/getDate';
-import { setCurrentProject } from '../slices/projectSlice';
+
 const projectApi = createApi({
 	reducerPath: 'projectApi',
 	tagTypes: ['Projects'],
@@ -13,18 +13,14 @@ const projectApi = createApi({
 			query() {
 				return { url: '/projects', method: 'get' };
 			},
-			providesTags: [{ type: 'Projects', id: 'PROJECT_LIST' }],
+			providesTags: ['Projects'],
 		}),
 		getCurrentProject: build.query<Project, string>({
 			query(id) {
 				return { url: `/projects/${id}`, method: 'get' };
 			},
-			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-				try {
-					const { data } = await queryFulfilled;
-					dispatch(setCurrentProject(data));
-				} catch (error) {}
-			},
+
+			providesTags: ['Projects'],
 		}),
 		createProject: build.mutation<Project, Omit<Project, '_id'>>({
 			query(payload) {
@@ -38,7 +34,7 @@ const projectApi = createApi({
 			},
 			invalidatesTags: ['Projects'],
 		}),
-		addMember: build.mutation<Project, { id: string; member: Pick<User, '_id'> }>({
+		addMember: build.mutation<Project, { id: string; member: Pick<IUser, '_id'> }>({
 			query(payload) {
 				return { url: `/projects/${payload.id}`, data: payload.member, method: 'patch' };
 			},

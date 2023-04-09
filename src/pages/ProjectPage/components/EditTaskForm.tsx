@@ -1,5 +1,6 @@
-import Button from '@/components/@tailwind/Button';
+import StyledButton from '@/components/@tailwind/Button';
 import { LongTextFieldControl, SelectFieldControl, TextFieldControl } from '@/components/@tailwind/FormControls';
+import { Priority } from '@/constants/task.const';
 import { useUpdateTaskMutation } from '@/redux/apis/taskApi';
 import { useAppDispatch, useAppSelector } from '@/redux/reduxHook';
 import { setCurrentTask } from '@/redux/slices/taskSlice';
@@ -36,7 +37,7 @@ const EditTaskModal = () => {
 		<>
 			<input type='checkbox' id='update-task-form' className='modal-toggle' />
 			<div className='modal'>
-				<div className='modal-box relative'>
+				<div className='scroll modal-box relative'>
 					<label htmlFor='update-task-form' className='btn-sm btn-circle btn absolute right-2 top-2'>
 						✕
 					</label>
@@ -100,7 +101,15 @@ const EditTaskModal = () => {
 								);
 							}}
 						/>
-						<Button type='submit'>Save</Button>
+						<SelectFieldControl
+							label='Priority'
+							control={control}
+							name='priority'
+							render={() => {
+								return Object.values(Priority).map((priority) => <option value={priority}>{priority}</option>);
+							}}
+						/>
+						<StyledButton type='submit'>Save</StyledButton>
 					</form>
 				</div>
 			</div>

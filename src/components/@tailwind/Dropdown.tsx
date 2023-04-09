@@ -1,9 +1,12 @@
 import tw from 'tailwind-styled-components';
-import { TwProps } from '@/types/twProps.type';
 
 import { ReactNode } from 'react';
 
-export const Dropdown = tw.div`dropdown ${(props: TwProps<string | ReactNode>) => {
+interface IDropdownProps extends React.HTMLAttributes<HTMLElement> {
+	position?: string;
+}
+
+export const Dropdown = tw.div`dropdown ${(props: IDropdownProps) => {
 	switch (props.position) {
 		case 'end':
 			return 'dropdown-end';

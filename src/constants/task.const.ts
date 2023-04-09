@@ -3,3 +3,10 @@ export const STATUS = [
 	{ value: 'IN_PROGRESS', title: 'in progress' },
 	{ value: 'COMPLETED', title: 'completed' },
 ];
+
+export const Priority = {
+	LOW: 'Low',
+	MEDIUM: 'Medium',
+	HIGH: 'High',
+	VERY_HIGH: 'Very High',
+};

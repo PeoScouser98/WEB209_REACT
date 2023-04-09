@@ -1,6 +1,5 @@
 import { useGetCurrentProjectQuery } from '@/redux/apis/projectApi';
-import { useAppDispatch, useAppSelector } from '@/redux/reduxHook';
-import { setCurrentProject } from '@/redux/slices/projectSlice';
+import { useAppDispatch } from '@/redux/reduxHook';
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import CreateTaskForm from './components/CreateTaskForm';
@@ -10,7 +9,7 @@ import TaskList from './components/TaskList';
 const ProjectPage = () => {
 	const { id } = useParams();
 	console.log(id);
-	const { data: currentProject } = useGetCurrentProjectQuery(id!);
+	const { data: currentProject } = useGetCurrentProjectQuery(id!, { refetchOnFocus: true });
 	const dispatch = useAppDispatch();
 
 	// dispatch(setCurrentProject(currentProject));

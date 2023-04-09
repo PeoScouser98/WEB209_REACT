@@ -1,16 +1,14 @@
-import { ReactElement, ReactNode } from 'react';
-import { DraggableStateSnapshot } from 'react-beautiful-dnd';
-import tw from 'tailwind-styled-components';
-import { useRef, forwardRef } from 'react';
-type CollapseProps = {
+import { ReactNode } from 'react';
+
+type ICollapseProps = {
 	children: ReactNode;
-	title: string | ReactElement;
+	title: string | ReactNode;
 	tw?: string;
 	isDragging?: boolean;
 	[key: string]: any;
 };
 
-const Collapse = (props: CollapseProps) => {
+const Collapse = (props: ICollapseProps) => {
 	return (
 		<div tabIndex={0} className={`collapse-arrow collapse w-full ${props.tw}`}>
 			<input type='checkbox' />

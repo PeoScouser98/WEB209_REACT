@@ -1,5 +1,6 @@
-import { User } from '@/types/user.type';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IUser } from '@/types/user.type';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { AxiosResponse } from 'axios';
 import axiosBaseQuery from '../axiosBaseQuery';
 
 const authApi = createApi({
@@ -9,15 +10,22 @@ const authApi = createApi({
 	refetchOnMountOrArgChange: true,
 	endpoints(build) {
 		return {
-			getUser: build.query<User, void>({
+			getUser: build.query<IUser, void>({
 				query() {
 					return { url: '/user', method: 'get' };
 				},
+
 				providesTags: ['Auth'],
+			}),
+			signout: build.mutation<AxiosResponse, void>({
+				query() {
+					return { url: '/signout', method: 'post' };
+				},
+				invalidatesTags: ['Auth'],
 			}),
 		};
 	},
 });
 
-export const { useGetUserQuery } = authApi;
+export const { useGetUserQuery, useSignoutMutation } = authApi;
 export default authApi;

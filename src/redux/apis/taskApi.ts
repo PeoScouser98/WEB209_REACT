@@ -10,8 +10,8 @@ const taskApi = createApi({
 	endpoints(build) {
 		return {
 			getTasksByProject: build.query<Array<Task>, string>({
-				query(id) {
-					return { url: `/tasks/${id}`, method: 'get' };
+				query(projectId) {
+					return { url: `/tasks/${projectId}`, method: 'get' };
 				},
 				providesTags: ['Task'],
 			}),

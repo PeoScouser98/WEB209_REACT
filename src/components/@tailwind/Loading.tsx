@@ -1,7 +1,10 @@
-import { TwProps } from '@/types/twProps.type';
 import tw from 'tailwind-styled-components';
 
-const Loading = tw.div`loading-spinner ${(props: TwProps<string>) => {
+interface ILoadingProps extends React.HTMLAttributes<HTMLElement> {
+	size?: string;
+}
+
+const Loading = tw.div`loading-spinner ${(props: ILoadingProps) => {
 	switch (props.size) {
 		case 'xs':
 			return 'loading-spinner-xs';

@@ -1,10 +1,17 @@
 import tw from 'tailwind-styled-components';
-import { TwProps } from '@/types/twProps.type';
-import { ReactNode } from 'react';
+
+interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
+	shape?: string;
+	color?: string;
+	size?: string;
+	outline?: boolean;
+	disabled?: boolean;
+	isLoading?: boolean;
+}
 
 const Button = tw.button`
     btn
-    ${(props: TwProps<string | ReactNode>) => {
+    ${(props: ButtonProps) => {
 			switch (props.shape) {
 				case 'circle':
 					return 'btn-circle';
@@ -17,7 +24,7 @@ const Button = tw.button`
 			}
 		}}
     
-    ${(props: TwProps<string | ReactNode>) => {
+    ${(props: ButtonProps) => {
 			switch (props.size) {
 				case 'sm':
 					return 'btn-sm';
@@ -36,9 +43,9 @@ const Button = tw.button`
 			}
 		}}
     
-    ${(props: TwProps<string | ReactNode>) => (props.outline ? 'btn-outline' : '')}
+    ${(props: ButtonProps) => (props.outline ? 'btn-outline' : '')}
     
-    ${(props: TwProps<string | ReactNode>) => {
+    ${(props: ButtonProps) => {
 			switch (props.color) {
 				case 'success':
 					return 'btn-success';
@@ -65,11 +72,11 @@ const Button = tw.button`
 			}
 		}}
         
-    ${(props: TwProps<string | ReactNode>) => {
+    ${(props: ButtonProps) => {
 			return props.disabled ? 'no-animation' : '';
 		}}
 
-    ${(props: TwProps<string | ReactNode>) => {
+    ${(props: ButtonProps) => {
 			return props.isLoading ? 'loading' : '';
 		}}
         `;
