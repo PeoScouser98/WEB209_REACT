@@ -1,10 +1,8 @@
 import Avatar from '@/components/@tailwind/Avatar';
-import Button from '@/components/@tailwind/Button';
 import Tooltip from '@/components/@tailwind/Tooltip';
 import Logo from '@/components/shared/Logo';
 import { useAppDispatch, useAppSelector } from '@/redux/reduxHook';
 import { ProjectActions, setProjectFormAction } from '@/redux/slices/projectSlice';
-import React from 'react';
 import { BiPlus } from 'react-icons/bi';
 import tw from 'tailwind-styled-components';
 
@@ -25,7 +23,7 @@ const Navbar = (props: Props) => {
 			<NavEnd>
 				<Tooltip data-tip='Create new project' position='bottom' color='primary'>
 					<label
-						className='btn-outline btn-square btn-xs btn'
+						className='btn-outline btn-square btn-xs btn text-white'
 						htmlFor='project-modal'
 						onClick={() => dispatch(setProjectFormAction(ProjectActions.CREATE))}>
 						<BiPlus className='font-medium' />

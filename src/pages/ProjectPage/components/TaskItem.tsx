@@ -38,11 +38,12 @@ const TaskItem = ({ task, index }: { task: Task; index: number }) => {
 						ref={provided.innerRef}>
 						<Collapse
 							title={
-								<span className='inline-flex items-center gap-3'>
-									{task.title}
-
-									<TaskPriority task={task} />
-								</span>
+								<div className='flex w-full items-center gap-3'>
+									<span className='basis-[20px]'>
+										<TaskPriority task={task} />
+									</span>
+									<span className='basis-full truncate'>{task.title}</span>
+								</div>
 							}
 							tw={`bg-base-100 py-3 px-2 rounded-lg duration-500 ${
 								snapshot.isDragging && 'shadow-2xl bg-base-200 drop-shadow-[0_0_0.5rem_#661ae6]'

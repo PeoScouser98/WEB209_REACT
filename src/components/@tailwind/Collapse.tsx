@@ -12,8 +12,8 @@ const Collapse = (props: ICollapseProps) => {
 	return (
 		<div tabIndex={0} className={`collapse-arrow collapse w-full ${props.tw}`}>
 			<input type='checkbox' />
-			<div className='collapse-title flex items-center gap-3 p-0'>{props.title}</div>
-			<div className='collapse-content h-fit min-w-full px-1' tabIndex={0}>
+			<div className='collapse-title flex items-center gap-3'>{props.title}</div>
+			<div className='collapse-content h-fit min-w-full' tabIndex={0}>
 				<div className='mt-4'>{props.children}</div>
 			</div>
 		</div>

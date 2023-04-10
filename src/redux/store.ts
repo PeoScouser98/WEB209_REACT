@@ -19,7 +19,7 @@ const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
-				ignoredActions: [REGISTER, FLUSH, PERSIST, PURGE, PAUSE],
+				ignoredActions: [REHYDRATE, REGISTER, FLUSH, PERSIST, PURGE, PAUSE],
 			},
 		}).concat([authApi.middleware, projectApi.middleware, taskApi.middleware, activityApi.middleware]),
 });

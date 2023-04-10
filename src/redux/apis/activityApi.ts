@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../axiosBaseQuery';
-import { IActivity } from '@/types/activity.type';
+import { IActivity, IActivityList } from '@/types/activity.type';
 
 const activityApi = createApi({
 	tagTypes: ['Activity'],
@@ -8,7 +8,7 @@ const activityApi = createApi({
 	baseQuery: axiosBaseQuery(),
 	endpoints(build) {
 		return {
-			getActivityLogs: build.query<Array<IActivity>, void>({
+			getActivityLogs: build.query<IActivityList, void>({
 				query() {
 					return { url: '/activities', method: 'get' };
 				},
@@ -18,6 +18,7 @@ const activityApi = createApi({
 				query(payload) {
 					return { url: 'activities', method: 'post', data: payload };
 				},
+				invalidatesTags: ['Activity'],
 			}),
 		};
 	},

@@ -29,7 +29,14 @@
 	:where(.collapse > input[type='checkbox']) {
 		@apply min-h-fit w-full p-1 transition-[background-color_0.2s_ease-in-out];
 	}
-
+.collapse-content{
+	@apply px-0
+}
+	.collapse-open :where(.collapse-content),
+	.collapse:focus:not(.collapse-close) :where(.collapse-content),
+	.collapse:not(.collapse-close) :where(input[type="checkbox"]:checked ~ .collapse-content) {
+	@apply py-2
+	}
 	.table :where(thead, tfoot) :where(th, td) {
 		@apply bg-base-300 text-neutral-content;
 	}

@@ -7,3 +7,10 @@ export interface IActivity {
 	createdAt: Date;
 	updatedAt?: Date;
 }
+
+export interface IActivityList {
+	docs: Array<IActivity>;
+	page: number;
+	nextPage: any;
+	[key: string]: any;
+}

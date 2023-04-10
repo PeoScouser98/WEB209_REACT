@@ -3,10 +3,27 @@ interface ITypographyProps extends React.HTMLAttributes<HTMLElement> {
 	fontWeight?: string;
 	align?: string;
 	size?: string;
+	color?: string;
 	transform?: string;
 }
 
 const Typography = tw.h1`font-semibold sm:text-2xl mb-6'
+${(props: ITypographyProps) => {
+	switch (props.color) {
+		case 'primary':
+			return 'text-primary';
+		case 'secondary':
+			return 'text-secondary';
+		case 'accent':
+			return 'text-accent';
+		case props.color:
+			return `text-[${props.color}]`;
+		default:
+			return 'text-base-content';
+	}
+}}
+
+
 ${(props: ITypographyProps) => {
 	switch (props.fontWeight) {
 		case 'thin':

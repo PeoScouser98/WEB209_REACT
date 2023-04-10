@@ -11,6 +11,9 @@ import { Menu, MenuItem } from '../../../components/@tailwind/Menu';
 
 const Sidebar = () => {
 	const { data: joinedProjects } = useGetJoinedProjectsQuery(undefined, { refetchOnMountOrArgChange: true });
+
+	console.log(joinedProjects);
+
 	const location = useLocation();
 	const [signout] = useSignoutMutation();
 	const dispatch = useAppDispatch();
@@ -42,16 +45,19 @@ const Sidebar = () => {
 										</Fragment>
 									}
 									tw='w-full'>
-									<Menu>
-										{Array.isArray(joinedProjects) &&
-											joinedProjects?.map((project) => (
+									{Array.isArray(joinedProjects) && joinedProjects.length > 0 ? (
+										<Menu>
+											{joinedProjects?.map((project) => (
 												<MenuItem>
 													<Link to={`/projects/${project._id}`}>
 														<BsFolder /> <span className='w-[10rem] truncate'>{project.projectName}</span>
 													</Link>
 												</MenuItem>
 											))}
-									</Menu>
+										</Menu>
+									) : (
+										<label className='inline-flex items-center justify-center p-3'>Empty</label>
+									)}
 								</Collapse>
 							</label>
 						</MenuItem>
